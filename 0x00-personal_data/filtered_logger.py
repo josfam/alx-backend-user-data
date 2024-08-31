@@ -5,12 +5,10 @@
 import re
 from typing import List
 
+
 def filter_datum(
     fields: List[str], redaction: str, message: str, separator: str
 ) -> str:
     """Returns the provided log message obfuscated"""
-    for field in fields:
-        for part in message.split(separator):
-            if part.startswith(field):
-                message = re.sub(part.split('=')[1], redaction, message)
-    return message
+    pattern = f"({'|'.join(fields)})=([^;]*)"
+    return re.sub(pattern, r'\1=' + redaction, message)
