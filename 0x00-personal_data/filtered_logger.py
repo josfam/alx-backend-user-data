@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
+"""Using re.sub to redact messages"""
+
 import re
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(
+    fields: list, redaction: str, message: str, separator: str
+) -> str:
     """Returns the provided log message obfuscated"""
     for field in fields:
         for part in message.split(separator):
