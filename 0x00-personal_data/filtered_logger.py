@@ -3,10 +3,10 @@
 """Using re.sub to redact messages"""
 
 import re
-
+from typing import List
 
 def filter_datum(
-    fields: list, redaction: str, message: str, separator: str
+    fields: List[str], redaction: str, message: str, separator: str
 ) -> str:
     """Returns the provided log message obfuscated"""
     for field in fields:
