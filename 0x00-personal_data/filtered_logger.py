@@ -4,7 +4,9 @@
 
 import re
 import logging
-from typing import List
+from typing import List, Tuple
+
+PII_FIELDS: Tuple[str] = ('email', 'phone', 'ssn', 'password', 'ip')
 
 
 class RedactingFormatter(logging.Formatter):
@@ -34,3 +36,10 @@ def filter_datum(
     """Returns the provided log message obfuscated"""
     pattern = f"({'|'.join(fields)})=([^;]*)"
     return re.sub(pattern, r'\1=' + redaction, message)
+
+
+def get_logger() -> logging.Logger:
+    """Returns a logger object"""
+    logger = logging.Logger(name='user_data', level=logging.INFO)
+    logger.propagate = False
+    logger.addHandler(RedactingFormatter(list(PII_FIELDS)))
