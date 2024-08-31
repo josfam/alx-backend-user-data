@@ -6,7 +6,7 @@ import re
 import logging
 from typing import List, Tuple
 
-PII_FIELDS: Tuple[str] = ('email', 'phone', 'ssn', 'password', 'ip')
+PII_FIELDS: Tuple[str] = ('email', 'phone', 'ssn', 'password', 'name')
 
 
 class RedactingFormatter(logging.Formatter):
