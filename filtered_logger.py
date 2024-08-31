@@ -2,6 +2,7 @@
 
 import re
 
+
 def filter_datum(fields, redaction, message, separator):
     """Returns the provided log message obfuscated"""
     for field in fields:
