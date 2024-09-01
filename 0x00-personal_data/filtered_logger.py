@@ -12,6 +12,28 @@ from typing import List, Tuple
 PII_FIELDS: Tuple[str] = ('email', 'phone', 'ssn', 'password', 'name')
 
 
+def main():
+    # get a db connection
+    cnx = get_db()
+    cur = cnx.cursor()
+    select_users = "SELECT * FROM users;"
+    cur.execute(select_users)
+    rows = cur.fetchall()
+    # logging
+    logger = get_logger()
+    columns = [i[0] for i in cur.description()]  # fetch column names
+    # log each row
+    for row in rows:
+        # create expected message string format, and redact it
+        message = (
+            ';'.join(f'{columns[i]}={row[i]}' for i in range(len(columns)))
+            + ';'
+        )
+        logger.info(message)
+    cur.close()
+    cnx.close()
+
+
 class RedactingFormatter(logging.Formatter):
     """Redacting Formatter class"""
 
@@ -62,3 +84,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         user=username, password=password, host=db_host, database=db_name
     )
     return cnx
+
+
+if __name__ == '__main__':
+    main()
