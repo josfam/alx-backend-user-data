@@ -23,6 +23,9 @@ if auth:
 
 @app.before_request
 def check_authorized():
+    """Return a json response if the user needs authorization for this path.
+    Return an error message if user is not authorized.
+    """
     if not auth:
         return
     requested_path = request.path
