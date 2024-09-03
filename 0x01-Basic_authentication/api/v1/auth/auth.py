@@ -17,7 +17,7 @@ class Auth:
             return True
         if f"{path.rstrip('/')}/" in excluded_paths:
             return False
-        return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """For handling the authorization header"""
